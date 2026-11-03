@@ -27,7 +27,7 @@ Run `npm run package` to build the portable directory under `dist/`. The codec s
 
 ## Hardware coverage
 
-Tested on a wired Drox reporting firmware 112 and protocol 3. Physical checks covered device configuration reads, lighting write/read-back, key remapping, recording-table writes, restoration of previous settings and LCD identification. GIF encoding ran in Electron. Upload framing and failure handling were tested with a simulated LCD. A wired physical upload of a 98,624-byte QGIF completed with acknowledged writes and finalization in approximately six seconds, including encoding and erase time. Receiver discovery was checked separately. Bluetooth configuration, firmware flashing and complete parity with the vendor editor are outside this version.
+Tested on a wired Drox reporting firmware 112 and protocol 3. Physical checks covered device configuration reads, lighting write/read-back, key remapping, recording-table writes, restoration of previous settings and LCD identification. GIF encoding ran in Electron. Upload framing and failure handling were tested with a simulated LCD. A wired physical upload of a 98,624-byte QGIF completed with acknowledged writes and finalization in approximately six seconds, including encoding and erase time. The owner confirmed that the moving test pattern played and looped on the physical LCD. Receiver discovery was checked separately. Bluetooth configuration, firmware flashing and complete parity with the vendor editor are outside this version.
 
 The layout coordinates and HID commands were derived from the public KRUX control center and wired-device responses. This is an independent utility.
 
@@ -40,4 +40,3 @@ Assignments show the current binding for each layer and support modifiers, multi
 The Display panel fits or crops GIFs, supports trim times, rotation, mirroring and two animation slots. Both slots are replaced as one collection. The original-file preview shows the selected first GIF. Trim and rotation are applied during encoding. The two encoded animations share Studio's 1 MiB flash allocation limit.
 
 Gaming settings include Mac mode, N-key rollover, function row and knob behavior, scan delay and two sleep timers. The Presets tab stores named lighting and gaming configurations locally. Key assignments, macro contents and individual palette colors are stored separately on the keyboard.
-

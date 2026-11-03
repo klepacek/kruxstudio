@@ -28,7 +28,7 @@ function action(id,fn){$(id).onclick=async()=>{
   if(busy||recording)return;
   busy=true;
   const buttons=[...document.querySelectorAll('button,select,input')];buttons.forEach(b=>b.disabled=true);
-  try{await fn()}catch(e){message(e.message)}finally{busy=false;buttons.forEach(b=>b.disabled=false)}
+  try{if(waking)await waking;await fn()}catch(e){message(e.message)}finally{busy=false;buttons.forEach(b=>b.disabled=false)}
 }}
 function ready(){if(!link)throw Error('Connect the keyboard first.')}
 async function pick(filters){
@@ -121,11 +121,11 @@ action('saveMacro',async()=>{
 });
 action('screen',async()=>{
   ready();if(link.device.productId!==0x2731)throw Error('Plug in the cable and switch the Drox to USB mode.');
-  await link.session(()=>link.command(224));await new Promise(r=>setTimeout(r,1200));
+  await wakeLCD();await new Promise(r=>setTimeout(r,750));
   let displayDevice;
   for(let attempt=0;attempt<6;attempt++){
     try{displayDevice=await pick([{vendorId:0x1919,productId:0x1919,usagePage:255,usage:1}]);break}
-    catch(e){if(attempt===5)throw e;await new Promise(r=>setTimeout(r,600))}
+    catch(e){if(attempt===5)throw e;await wakeLCD();await new Promise(r=>setTimeout(r,600))}
   }
   const conn=new Link(displayDevice,true);
   const info=await conn.session(()=>conn.command(18,0,56));
@@ -143,9 +143,12 @@ function encode(file){return new Promise((resolve,reject)=>{
 action('upload',async()=>{
   if(!lcd)throw Error('Connect the LCD first.');const file=$('gif').files[0];
   if(!file||file.size>16*1024*1024)throw Error('Choose a GIF under 16 MiB.');
+  uploading=true;
+  try{
   const bytes=await encode(file);
   if(!confirm('Replace all existing LCD animations with '+file.name+'?')){message('Upload cancelled.');return}
   await uploadAnimation(lcd,bytes,progress);progress(100,'LCD animation saved');
+  }finally{uploading=false}
 });
 
 
@@ -168,3 +171,16 @@ action('clock',async()=>{
     ...digits(now.getDate()),...digits(now.getHours()),...digits(now.getMinutes()),...digits(now.getSeconds())];
   await lcd.session(()=>lcd.command(23,0,56,stamp));message('LCD clock synchronized.');
 });
+
+let waking=null, uploading=false;
+function wakeLCD(){
+  if(!waking)waking=(async()=>{
+    await link.session(async()=>{if(!(await link.command(226))[8])await link.command(224)});
+  })().finally(()=>{waking=null});
+  return waking;
+}
+setInterval(()=>{
+  if(link && lcd && !$('Display').hidden)wakeLCD().catch(()=>{});
+},1000);
+
+

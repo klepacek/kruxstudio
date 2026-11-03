@@ -1,0 +1,22 @@
+name: Windows portable app
+on: [push, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run codec
+      - run: npm run package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Drox-Studio-Windows-x64
+          path: dist/Drox Studio-win32-x64/
+

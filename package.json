@@ -1,0 +1,29 @@
+{
+  "name": "drox-studio",
+  "version": "0.1.0",
+  "description": "Desktop controls for the KRUX Drox",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "codec": "node codec-setup.cjs",
+    "package": "electron-packager . --platform=win32 --arch=x64 --out=dist --overwrite",
+    "test": "node --test display.test.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klepacek/kruxdrox.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/klepacek/kruxdrox/issues"
+  },
+  "homepage": "https://github.com/klepacek/kruxdrox#readme",
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "electron": "^45.2.1"
+  },
+  "productName": "Drox Studio"
+}

@@ -30,3 +30,13 @@ Run `npm run package` to build the portable directory under `dist/`. The codec s
 Tested on a wired Drox reporting firmware 112 and protocol 3. Physical checks covered device configuration reads, lighting write/read-back, key remapping, recording-table writes, restoration of previous settings and LCD identification. GIF encoding ran in Electron. Upload framing and failure handling were tested with a simulated LCD so the existing hardware animation collection could be preserved. No physical upload speed measurement is available. Receiver discovery was checked separately. Bluetooth configuration, firmware flashing and complete parity with the vendor editor are outside this version.
 
 The layout coordinates and HID commands were derived from the public KRUX control center and wired-device responses. This is an independent utility.
+
+## Studio 0.2
+
+The control panel now includes independent key and side lighting, 20 built-in backlight effects, five per-key palettes, brightness, speed and multicolor control. Pick a custom palette and select a physical key to paint it. The color picker controls single-color effects when multicolor is unchecked.
+
+Assignments show the current binding for each layer and support modifiers, multimedia commands, and all three knob actions. The macro panel reads existing onboard slots, opens their event sequences, edits delays, and can overwrite a selected slot or bind it to another key. New recordings can still be appended.
+
+The Display panel fits or crops GIFs, supports trim times, rotation, mirroring and two animation slots. Both slots are replaced as one collection. The original-file preview shows the selected first GIF. Trim and rotation are applied during encoding. The two encoded animations share Studio's 1 MiB flash allocation limit.
+
+Gaming settings include Mac mode, N-key rollover, function row and knob behavior, scan delay and two sleep timers. The Presets tab stores named lighting and gaming configurations locally. Key assignments, macro contents and individual palette colors are stored separately on the keyboard.

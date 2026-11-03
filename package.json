@@ -1,6 +1,6 @@
 {
   "name": "drox-studio",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Desktop controls for the KRUX Drox",
   "main": "main.cjs",
   "scripts": {
